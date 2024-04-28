@@ -1,0 +1,17 @@
+To get random profile pic goto:
+https://avatar-placeholder.iran.liara.run/
+
+To generate random JWT secret Key : 
+open gitbash := and enter openssl rand -base64 32
+
+In Model enum is used to set from specific values only:
+enum:["male","female"]
+
+For encrypting the password we used bcryptjs
+
+We will have 2 database model
+conversation and Message
+conversation:
+id,participants,messages
+Message:
+id,senderId,receiverId,message
