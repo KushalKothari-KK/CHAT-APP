@@ -12,10 +12,13 @@ export const SocketContextProvider = ({children}) =>{
     const [socket,setSocket] = useState(null);
     const [onlineUsers,setOnlineUsers] = useState([]);
     const {authUser} = useAuthContext()
+    // const localBackendURI = "http://localhost:5000"
+    const productionURI = `${window?.location?.protocol}//${window?.location?.hostname}`;
+    const serverHostName = productionURI;
 
     useEffect(()=>{
         if(authUser) {
-            const socket = io("http://localhost:5000",{
+            const socket = io(serverHostName,{
                 query:{
                     userId:authUser._id,
                 }
