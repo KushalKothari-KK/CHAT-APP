@@ -12,9 +12,9 @@ export const SocketContextProvider = ({children}) =>{
     const [socket,setSocket] = useState(null);
     const [onlineUsers,setOnlineUsers] = useState([]);
     const {authUser} = useAuthContext()
-    // const localBackendURI = "http://localhost:5000"
+    const localBackendURI = "http://localhost:5000"
     const productionURI = `${window?.location?.protocol}//${window?.location?.hostname}`;
-    const serverHostName = productionURI;
+    const serverHostName = localBackendURI;
 
     useEffect(()=>{
         if(authUser) {

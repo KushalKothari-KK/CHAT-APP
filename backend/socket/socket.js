@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import http from 'http';
 import express from "express"
+import Message from "../models/message.model.js";
 
 const app = express();
 
@@ -24,7 +25,15 @@ io.on('connection',(socket)=>{
     const userId = socket.handshake.query.userId;
     if(userId !== "undefined") userSocketMap[userId] = socket.id;
     // io.emit() is used to send events to all the connected clients
-    io.emit("getOnlineUsers",Object.keys(userSocketMap))
+    io.emit("getOnlineUsers",Object.keys(userSocketMap));
+    socket.on("markMessageAsSeen", async({conversationId,receiverId})=>{
+        try {
+            await Message.updateMany({senderId:conversationId,receiverId:receiverId,seen:false},{$set:{seen:true}})
+            io.to(userSocketMap[conversationId]).emit("messagesSeen",{conversationId})
+        } catch (error) {
+            console.error(error);
+        }
+    })
 
     //socket.on() is used to listen to the events.can be used both on client and server side
     socket.on("disconnect",()=>{
