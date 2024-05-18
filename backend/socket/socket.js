@@ -26,10 +26,10 @@ io.on('connection',(socket)=>{
     if(userId !== "undefined") userSocketMap[userId] = socket.id;
     // io.emit() is used to send events to all the connected clients
     io.emit("getOnlineUsers",Object.keys(userSocketMap));
-    socket.on("markMessageAsSeen", async({conversationId,receiverId})=>{
+    socket.on("markMessageAsSeen", async({conversationId,senderId})=>{
         try {
-            await Message.updateMany({senderId:conversationId,receiverId:receiverId,seen:false},{$set:{seen:true}})
-            io.to(userSocketMap[conversationId]).emit("messagesSeen",{conversationId})
+           const newMessage = await Message.updateMany({senderId,conversationId,seen:false},{$set:{seen:true}})
+            io.to(userSocketMap[senderId]).emit("messagesSeen",{senderId})
         } catch (error) {
             console.error(error);
         }

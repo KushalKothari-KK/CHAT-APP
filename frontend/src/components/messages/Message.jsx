@@ -16,7 +16,7 @@ const Message = ({ message }) => {
   const messageSeenColor = message.seen ? "text-green-400" : "";
   const shakeClass = message.shouldShake ? "shake" : "";
   return (
-    <div className={`chat ${chatClassName}`}>
+    <div className={`chat ${chatClassName} z-0`}>
       <div className='chat-image avatar'>
         <div className='w-10 rounded-full'>
           <img src={profilePic} alt='user avatar' />
@@ -30,7 +30,7 @@ const Message = ({ message }) => {
           <IoCheckmarkDoneSharp className='text-base text-center' />
         </div>}
       </div>
-      <div className='chat-footer opacity-50 text-xs flex gap-1 items-center text-white z-10'>
+      <div className='chat-footer opacity-50 text-xs flex gap-1 items-center text-white'>
         {formatedTime}
       </div>
     </div>

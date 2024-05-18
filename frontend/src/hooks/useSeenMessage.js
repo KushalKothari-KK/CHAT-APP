@@ -13,13 +13,13 @@ const useSeenMessage = () => {
         if(lastMessageIsFromOtherUser) {
         //trigger this when receiver see the message
         socket.emit("markMessageAsSeen",{
-            conversationId:selectedConversation._id,
-            receiverId:messages[messages.length-1]?.receiverId,
+            conversationId:messages[messages.length-1]?.conversationId,
+            senderId:selectedConversation._id,
         })
      }
     // //  this will work on sender side to check if receiver has seen the message
-     socket.on("messagesSeen", ({conversationId})=>{
-        if(authUser?._id === conversationId) {
+     socket.on("messagesSeen", ({senderId})=>{
+        if(authUser?._id === senderId) {
             const newMessage = messages?.map((message)=>{
                 if(!message.seen){
                     return {

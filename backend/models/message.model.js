@@ -18,6 +18,11 @@ const messageSchema = new mongoose.Schema({
     seen:{
         type:Boolean,
         default:false,
+    },
+    conversationId:{
+        type: mongoose.Schema.Types.ObjectId, 
+        required: true, 
+        ref: "Conversation" 
     }
 },{timestamps:true});
 
